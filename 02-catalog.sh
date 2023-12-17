@@ -47,9 +47,9 @@ curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zi
 
 validate $? "downloading catalog succesfully"
 
-unzip /tmp/catalogue.zip
-
 cd /app
+
+unzip /tmp/catalogue.zip
 
 npm install 
 
