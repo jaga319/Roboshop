@@ -38,14 +38,14 @@ dnf install nodejs -y &>> $LOG_File
 
 validate $? "installed succesfully"
 
-id roboshop
+id roboshop 
 if [ $? -ne 0 ]
 then
-useradd roboshop
+   useradd roboshop
+   validate $? "created user succesfully"
 else
-   echo "User already available $Y SKIPPING"
-
-validate $? "created user succesfully"
+   echo -e "User already available $Y SKIPPING $N"
+fi
 
 mkdir -p /app
 
@@ -55,7 +55,7 @@ validate $? "downloading catalog succesfully"
 
 cd /app
 
-unzip /tmp/catalogue.zip &>> $LOG_File
+unzip -o /tmp/catalogue.zip &>> $LOG_File
 
 npm install &>> $LOG_File
 
