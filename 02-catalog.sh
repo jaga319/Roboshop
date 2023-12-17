@@ -12,6 +12,7 @@ validate(){
     if [ $1 -ne 0 ]
     then
        echo -e "$R Error: not $2 $N"
+       exit 1
     else
        echo -e "$G $2  $N"
     fi
@@ -25,51 +26,56 @@ else
   echo " You are in Root user "
 fi
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOG_File
 
 validate $? "disable succesfully"
 
-dnf module enable nodejs:18 -y
+dnf module enable nodejs:18 -y &>> $LOG_File
 
 validate $? "enable succesfully"
 
-dnf install nodejs -y
+dnf install nodejs -y &>> $LOG_File
 
 validate $? "installed succesfully"
 
+id roboshop
+if [ $? -ne 0 ]
+then
 useradd roboshop
+else
+   echo "User already available $Y SKIPPING"
 
 validate $? "created user succesfully"
 
-mkdir /app
+mkdir -p /app
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOG_File
 
 validate $? "downloading catalog succesfully"
 
 cd /app
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOG_File
 
-npm install 
+npm install &>> $LOG_File
 
 validate $? "installing dependencies succesfully"
 
-cp /home/centos/roboshop/catalog.service /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop/catalog.service /etc/systemd/system/catalogue.service &>> $LOG_File
 
-systemctl daemon-reload
-
-
-systemctl enable catalogue
+systemctl daemon-reload &>> $LOG_File
 
 
-systemctl start catalogue
+systemctl enable catalogue &>> $LOG_File
 
-cp /home/centos/Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo
 
-dnf install mongodb-org-shell -y
+systemctl start catalogue &>> $LOG_File
 
-mongo --host mongo.infome.website </app/schema/catalogue.js
+cp /home/centos/Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo 
+
+dnf install mongodb-org-shell -y &>> $LOG_File
+
+mongo --host mongo.infome.website </app/schema/catalogue.js &>> $LOG_File
 
 
 
