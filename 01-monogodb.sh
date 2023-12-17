@@ -4,13 +4,16 @@ G="\e[32m"
 N="\e[0m"
 Y="\e[33m"
 
+Date=$(date +%F-%H-%M-%S)
+LOG_File="/tmp/$0-$Date.log"
+
 
 validate(){
     if [ $1 -ne 0 ]
     then
-       echo -e "$R Error:$2 is not installed successfully $N"
+       echo -e "$R Error: not $2 $N"
     else
-       echo -e "$G $2 is installed successfully installed $N"
+       echo -e "$G $2  $N"
     fi
 }
 ID=$(id -u)
@@ -22,4 +25,6 @@ else
   echo " You are in Root user "
 fi
 
-cp mongo.repo /etc/yum.repos.d/
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOG_File
+
+validate $? "Copied mongodb successfully"
