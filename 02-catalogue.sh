@@ -61,7 +61,7 @@ npm install &>> $LOG_File
 
 validate $? "installing dependencies succesfully"
 
-cp /home/centos/roboshop/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG_File
+cp /home/centos/Roboshop/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG_File
 
 systemctl daemon-reload &>> $LOG_File
 
