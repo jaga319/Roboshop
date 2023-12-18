@@ -77,16 +77,3 @@ systemctl start cart &>> $LOG_File
 
 validate $? "started cart succesfully"
 
-cp /home/centos/Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo 
-
-dnf install mongodb-org-shell -y &>> $LOG_File
-
-validate $? "installed mongodb-org-shell succesfully"
-
-mongo --host mongo.infome.website </app/schema/cart.js &>> $LOG_File
-
-validate $? "Database schema loaded succesfully"
-
-echo "cart Application downloaded successfully "
-
-
