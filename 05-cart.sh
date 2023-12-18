@@ -41,7 +41,7 @@ validate $? "nodejs installed succesfully"
 id roboshop 
 if [ $? -ne 0 ]
 then
-   user add roboshop
+   useradd roboshop
    validate $? "created user succesfully"
 else
    echo -e "cart already available $Y SKIPPING $N"
