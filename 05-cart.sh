@@ -49,31 +49,31 @@ fi
 
 mkdir -p /app
 
-curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>>$LOG_File
+curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip 
 
 validate $? "downloaded cart application succesfully"
 
 cd /app
 
-unzip -o /tmp/cart.zip &>> $LOG_File
+unzip -o /tmp/cart.zip 
 
 validate $? "unziped cart application succesfully"
 
-npm install &>> $LOG_File
+npm install 
 
 validate $? "installed nodejs dependencies succesfully"
 
-cp /home/centos/Roboshop/cart.service /etc/systemd/system/cart.service &>> $LOG_File
+cp /home/centos/Roboshop/cart.service /etc/systemd/system/cart.service 
 
-systemctl daemon-reload &>> $LOG_File
+systemctl daemon-reload 
 
 validate $? "daemon-reload succesfully"
 
-systemctl enable cart &>> $LOG_File
+systemctl enable cart 
 
 validate $? "enable cart succesfully"
 
-systemctl start cart &>> $LOG_File
+systemctl start cart 
 
 validate $? "started cart succesfully"
 
